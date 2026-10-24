@@ -45,8 +45,8 @@ Không mở trực tiếp `dist/index.html` bằng `file://`: ứng dụng dùng
   Ô **Nguồn vào** mở màn hình HDMI/Live TV, **Cài đặt TV** mở cài đặt của TV.
 - **Màn hình cũ** (launcher Tối giản CleanYourTV, gói `com.gathin.tvhome`) vẫn được giữ nguyên:
   - Xem tạm: chọn ô **Màn hình cũ**; bấm Home để quay lại Nhà Tí Yang.
-  - Đổi hẳn về màn hình cũ, không cần máy tính: Cài đặt → Ứng dụng → Nhà Tí Yang → **Tắt** (hoặc Gỡ cài đặt).
-    Muốn dùng lại Nhà Tí Yang thì vào lại đó và bấm **Bật**.
+  - Đổi hẳn về màn hình cũ, không cần máy tính: Cài đặt → Ứng dụng → Nhà Tí Yang → **Gỡ cài đặt**, rồi bấm Home
+    (nếu TV hỏi chọn màn hình chính thì chọn CleanYourTV). Cài lại Nhà Tí Yang sau đó cần máy tính.
   - Bằng máy tính (cần bật Gỡ lỗi USB): `cmd package set-home-activity com.gathin.tvhome/.MainActivity`
     (đổi về Nhà Tí Yang: `cmd package set-home-activity vn.tiyang.home/.MainActivity`).
 - Build lại app: trong `android/`, `./gradlew assembleRelease` (JDK 17, Android SDK 34), cài bằng `pm install -r`.
