@@ -85,7 +85,7 @@ Có thể bắt đầu bằng yêu cầu:
 - Hẹn giờ 5, 15, 30 hoặc 60 phút trong khi trang còn mở.
 - Nút toàn màn hình, điều hướng bằng phím mũi tên/Enter và đóng khung bằng Escape.
 - Ba tông giao diện: **Điện ảnh**, **Xanh đêm**, **Tối giản**.
-- Kiểu màn hình chính (Tùy chỉnh → Kiểu màn hình chính): **Hiện đại**, **Tết sum vầy** (nền đỏ, hoa mai rơi, tờ lịch bóc có ngày âm, câu chúc và đếm ngược tới Tết), **Tự động theo Tết** (mặc định: bật Tết từ 23 tháng Chạp đến mùng 10 tháng Giêng).
+- Kiểu màn hình chính (Tùy chỉnh → Kiểu màn hình chính): **Hiện đại**, **Tết sum vầy** (nền đỏ, hoa mai rơi, tờ lịch bóc có ngày âm, câu chúc và đếm ngược tới Tết), **Rạp chiếu ảnh** (ảnh album phủ kín màn hình, mỗi ảnh 9 giây, phóng chậm và chuyển mờ; ảnh dọc hiện trọn trên nền mờ của chính nó; các nút thành kính tối), **Tự động theo Tết** (mặc định: bật Tết từ 23 tháng Chạp đến mùng 10 tháng Giêng).
 - Thanh nhạc YouTube: Top nhạc trẻ thịnh hành (playlist bảng xếp hạng Việt Nam do YouTube cập nhật hằng tuần), Chillhop Radio (Lofi Girl không cho phát nhúng, lỗi 150), nhập link video/playlist; phát/tạm dừng, chuyển video trong playlist, tua khi video có thời lượng.
 - Các ô mở YouTube, Spotify và Netflix bằng trang web.
 

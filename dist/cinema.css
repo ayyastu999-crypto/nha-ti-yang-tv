@@ -1,0 +1,33 @@
+/* "Rạp chiếu ảnh" home style, on when body has .layout-cinema (Settings > Kiểu màn hình chính).
+   The photo is the whole background; the page keeps its structure and remote navigation, with the album strip and
+   headline hidden and every panel turned into dark glass. No backdrop-filter: blurring over a moving photo every
+   frame is too heavy for a TV GPU. */
+.cinema-caption{display:none}
+body.layout-cinema{background:#000}
+body.layout-cinema:before,body.layout-cinema:after{display:none}
+body.layout-cinema *{backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
+
+.cinema-bg{position:fixed;inset:0;z-index:-1;overflow:hidden;background:#000}
+.cinema-slide{position:absolute;inset:0;opacity:0;transition:opacity 1.6s ease}
+.cinema-slide.show{opacity:1}
+.cinema-photo{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transform-origin:60% 40%}
+.cinema-slide.show .cinema-photo{animation:cinema-kenburns 11s ease-out both}
+/* Portrait: the whole photo in the middle, over a blurred copy blurred small then scaled up (cheap on a TV). */
+.cinema-fill{display:none;position:absolute;left:0;top:0;width:25%;height:25%;object-fit:cover;transform:scale(4.05);transform-origin:0 0;filter:blur(7px) brightness(.5)}
+.cinema-slide.portrait .cinema-fill{display:block}
+.cinema-slide.portrait .cinema-photo{object-fit:contain}
+.cinema-bg:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,#000000b0 0%,#0000 26%,#0000 52%,#000000d9 100%)}
+@keyframes cinema-kenburns{from{transform:scale(1)}to{transform:scale(1.09)}}
+@media(prefers-reduced-motion:reduce){.cinema-slide.show .cinema-photo{animation:none}}
+
+.layout-cinema .intro,.layout-cinema .album-area,.layout-cinema .daily-note{display:none}
+.layout-cinema .stage{display:flex;flex-direction:column;justify-content:space-between;align-items:flex-start}
+.layout-cinema .today-sidebar{background:transparent;border:0;box-shadow:none;padding:22px 0 0;margin:0;width:clamp(260px,24vw,380px);justify-content:flex-start;align-self:flex-start}
+.layout-cinema .clock-widget{text-align:left}
+.layout-cinema .clock{justify-content:flex-start;text-shadow:0 2px 18px #00000099}
+.layout-cinema .clock-widget p{text-shadow:0 1px 8px #000000aa}
+.layout-cinema .lunar-card{background:#0000008c;border-color:#ffffff22}
+.layout-cinema .cinema-caption{display:block;margin:0 0 16px;color:#fff;font-size:clamp(22px,2vw,38px);font-weight:600;letter-spacing:-.3px;text-shadow:0 2px 14px #000000b3}
+.layout-cinema .header .top-nav,.layout-cinema .header .icon-button,.layout-cinema .header .add-photos{background:#00000073}
+.layout-cinema .music-strip{background:#000000a6;border-color:#ffffff1f}
+.layout-cinema .app-dock{background:#0000008c;border-radius:24px;padding:12px 18px}

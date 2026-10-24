@@ -1,5 +1,6 @@
 import {solarToLunar, vietnamDateParts, lunarYearName} from './lunar.mjs';
 import {isTetSeason, tetCountdown, tetWish, setTetBlossoms} from './tet-layout.mjs';
+import {setCinema} from './cinema-layout.mjs';
 
 // tv-fit.js runs this app inside a scaled frame on small TV viewports; the outer page then stays idle.
 if(!window.__tvFit){
@@ -11,7 +12,7 @@ let preferences = {theme:'warm',speed:3000,showLunar:true,layout:'auto'};
 try { preferences = {...preferences, ...JSON.parse(localStorage.getItem('nha-minh-preferences') || '{}')}; } catch {}
 if (!['warm','sage','night'].includes(preferences.theme)) preferences.theme='warm';
 if (![3000,8000,15000,30000].includes(Number(preferences.speed))) preferences.speed=3000;
-if (!['modern','tet','auto'].includes(preferences.layout)) preferences.layout='auto';
+if (!['modern','tet','cinema','auto'].includes(preferences.layout)) preferences.layout='auto';
 
 const demoPhotos = [
   {src:'assets/photo-1.jpg',caption:'Một chiều về miền xanh',alt:'Ruộng bậc thang và mái nhà giữa núi xa',author:'Peter Hammer',source:'https://unsplash.com/photos/scenery-of-rice-fields-ggQy5lGtwb0'},
@@ -220,8 +221,10 @@ function applyLayout(){
   // The modern texts are read on the first call (applyPreferences runs this early, before later declarations).
   const modernTexts=applyLayout.texts??=({title:$('page-title').textContent,tag:$('page-title').closest('section')?.querySelector('.quiet-tag')?.lastChild?.textContent});
   const today=vietnamDateParts(),lunar=solarToLunar(today.day,today.month,today.year);
-  const tet=preferences.layout==='tet'||(preferences.layout==='auto'&&isTetSeason(lunar));
+  const tet=preferences.layout==='tet'||(preferences.layout==='auto'&&isTetSeason(lunar)), cinema=preferences.layout==='cinema';
   document.body.classList.toggle('layout-tet',tet);setTetBlossoms(tet);
+  document.body.classList.toggle('layout-cinema',cinema);
+  setCinema(cinema,()=>photos,caption=>{$('cinema-caption').textContent=caption;},()=>autoplay);
   $('page-title').textContent=tet?'Xuân sum vầy, nhà Tí Yang.':modernTexts.title;
   const tag=$('page-title').closest('section')?.querySelector('.quiet-tag')?.lastChild;
   if(tag&&modernTexts.tag)tag.textContent=tet?` ${tetWish(today)}`:modernTexts.tag;
@@ -347,7 +350,7 @@ document.addEventListener('keydown',event=>{
   const candidates=Array.from(scope.querySelectorAll('button,a[href],input:not([type="file"]),select,summary')).filter(element=>
     !element.disabled&&element.getClientRects().length&&getComputedStyle(element).visibility!=='hidden'&&!element.closest('[hidden]')&&(!element.closest('dialog')||element.closest('dialog')===activeDialog));
   if(!candidates.length)return;event.preventDefault();
-  if(!candidates.includes(focused)){(activeDialog?candidates[0]:(rememberedFocus(candidates)||$('photo-reel'))).focus();return;}
+  if(!candidates.includes(focused)){(activeDialog?candidates[0]:(rememberedFocus(candidates)||[$('photo-reel'),document.querySelector('.app-dock .app-tile:not([hidden])')].find(element=>candidates.includes(element)))).focus();return;}
   const r=focused.getBoundingClientRect(),x=r.x+r.width/2,y=r.y+r.height/2;
   const horizontal=event.key==='ArrowLeft'||event.key==='ArrowRight', positive=event.key==='ArrowRight'||event.key==='ArrowDown';
   let best=null,bestScore=Infinity;
@@ -518,6 +521,8 @@ if(tvBridge){
       basePhotos=album.photos.map(photo=>({...photo,src:`https://appassets.androidplatform.net/family/${photo.file}`}));
       baseSpreads=album.spreads;familyAlbum=true;
       if(!customPhotos){photos=[...basePhotos];spreadIndex=0;rebuildDots();renderSpread();renderGallery();}
+      // The cinema slideshow may already be showing a demo photo: restart it on the family album.
+      if(document.body.classList.contains('layout-cinema')){setCinema(false);applyLayout();}
     }
   }catch{}
   // As the TV's home screen, start with focus on a control so the first remote press already moves it.
