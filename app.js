@@ -1,4 +1,5 @@
 import {solarToLunar, vietnamDateParts, lunarYearName} from './lunar.mjs';
+import {isTetSeason, tetCountdown, tetWish, setTetBlossoms} from './tet-layout.mjs';
 
 // tv-fit.js runs this app inside a scaled frame on small TV viewports; the outer page then stays idle.
 if(!window.__tvFit){
@@ -6,10 +7,11 @@ if(!window.__tvFit){
 const $ = id => document.getElementById(id);
 const pad = value => String(value).padStart(2,'0');
 const monthNames = ['Giêng','Hai','Ba','Tư','Năm','Sáu','Bảy','Tám','Chín','Mười','Mười một','Chạp'];
-let preferences = {theme:'warm',speed:3000,showLunar:true};
+let preferences = {theme:'warm',speed:3000,showLunar:true,layout:'auto'};
 try { preferences = {...preferences, ...JSON.parse(localStorage.getItem('nha-minh-preferences') || '{}')}; } catch {}
 if (!['warm','sage','night'].includes(preferences.theme)) preferences.theme='warm';
 if (![3000,8000,15000,30000].includes(Number(preferences.speed))) preferences.speed=3000;
+if (!['modern','tet','auto'].includes(preferences.layout)) preferences.layout='auto';
 
 const demoPhotos = [
   {src:'assets/photo-1.jpg',caption:'Một chiều về miền xanh',alt:'Ruộng bậc thang và mái nhà giữa núi xa',author:'Peter Hammer',source:'https://unsplash.com/photos/scenery-of-rice-fields-ggQy5lGtwb0'},
@@ -44,6 +46,8 @@ function applyPreferences() {
   $('show-lunar').checked=preferences.showLunar;
   $('lunar-card').hidden=!preferences.showLunar;
   $('autoplay-speed').value=String(preferences.speed);
+  document.querySelectorAll('[data-layout-choice]').forEach(b=>{const selected=b.dataset.layoutChoice===preferences.layout;b.classList.toggle('selected',selected);b.setAttribute('aria-pressed',String(selected));});
+  applyLayout();
   document.querySelectorAll('[data-theme-choice]').forEach(b=>{
     const selected=b.dataset.themeChoice===preferences.theme;
     b.classList.toggle('selected',selected);b.setAttribute('aria-pressed',String(selected));
@@ -210,9 +214,29 @@ $('restore-demo').onclick=async()=>{
 
 function displayLunar(lunar){return `${lunar.day} tháng ${monthNames[lunar.month-1]}${lunar.leap?' nhuận':''} · ${lunarYearName(lunar.year)}`;}
 let lastDate='';
+// "Tết sum vầy" style: on when chosen, or in "auto" from 23 tháng Chạp to mùng 10 Tết. Swaps the headline texts,
+// turns the sidebar into a tear-off calendar (tet.css) and lets mai blossoms fall.
+function applyLayout(){
+  // The modern texts are read on the first call (applyPreferences runs this early, before later declarations).
+  const modernTexts=applyLayout.texts??=({title:$('page-title').textContent,tag:$('page-title').closest('section')?.querySelector('.quiet-tag')?.lastChild?.textContent});
+  const today=vietnamDateParts(),lunar=solarToLunar(today.day,today.month,today.year);
+  const tet=preferences.layout==='tet'||(preferences.layout==='auto'&&isTetSeason(lunar));
+  document.body.classList.toggle('layout-tet',tet);setTetBlossoms(tet);
+  $('page-title').textContent=tet?'Xuân sum vầy, nhà Tí Yang.':modernTexts.title;
+  const tag=$('page-title').closest('section')?.querySelector('.quiet-tag')?.lastChild;
+  if(tag&&modernTexts.tag)tag.textContent=tet?` ${tetWish(today)}`:modernTexts.tag;
+}
+function renderTetCalendar(today,lunar,weekday){
+  $('tet-cal-band').textContent=`THÁNG ${today.month} · ${today.year}`;
+  $('tet-cal-day').textContent=today.day;$('tet-cal-weekday').textContent=weekday;
+  $('tet-cal-lunar-day').textContent=`${lunar.day} tháng ${monthNames[lunar.month-1]}${lunar.leap?' nhuận':''}`;
+  $('tet-cal-lunar-year').textContent=`Âm lịch · năm ${lunarYearName(lunar.year)}`;
+  $('tet-cal-wish').textContent=tetWish(today);$('tet-cal-countdown').textContent=tetCountdown(today,lunar);
+}
 function updateClock(){
   const today=vietnamDateParts(), key=`${today.year}-${today.month}-${today.day}`;
   $('clock-hours').textContent=pad(today.hour);$('clock-minutes').textContent=pad(today.minute);
+  $('tet-cal-clock').textContent=`${pad(today.hour)}:${pad(today.minute)}`;
   $('clock').setAttribute('aria-label',`${today.hour} giờ ${today.minute} phút tại Việt Nam`);
   $('day-greeting').textContent=today.hour<5?'ĐÊM ÊM, NHÀ TÍ YANG NHÉ':today.hour<11?'CHÀO BUỔI SÁNG':today.hour<14?'MỘT CHÚT BÌNH YÊN':today.hour<18?'CHÀO BUỔI CHIỀU':'CHÀO BUỔI TỐI';
   if(key===lastDate)return;lastDate=key;
@@ -224,6 +248,7 @@ function updateClock(){
   $('lunar-note').textContent=lunar.day===15?`Hôm nay là Rằm tháng ${lunar.month}${lunar.leap?' nhuận':''}`:lunar.day===1?'Mùng Một · Một khởi đầu mới':'Một ngày để giữ điều thương';
   $('lunar-card').setAttribute('aria-label',`Âm lịch hôm nay: ${displayLunar(lunar)}. Mở lịch tháng.`);
   if($('calendar-dialog').open)renderCalendar();
+  renderTetCalendar(today,lunar,weekday);applyLayout();
 }
 function openCalendar(){
   const today=vietnamDateParts();calendarYear=today.year;calendarMonth=today.month;chosenDay=today.day;
@@ -257,6 +282,7 @@ function changeMonth(step){
 $('calendar-prev').onclick=()=>changeMonth(-1);$('calendar-next').onclick=()=>changeMonth(1);$('calendar-today').onclick=openCalendar;
 
 ['settings','app-settings'].forEach(id=>$(id).onclick=()=>openDialog('settings-dialog'));
+document.querySelectorAll('[data-layout-choice]').forEach(button=>button.onclick=()=>{preferences.layout=button.dataset.layoutChoice;applyPreferences();savePreferences();});
 document.querySelectorAll('[data-theme-choice]').forEach(button=>button.onclick=()=>{preferences.theme=button.dataset.themeChoice;applyPreferences();savePreferences();});
 $('autoplay-speed').onchange=event=>{preferences.speed=Number(event.target.value);savePreferences();scheduleAutoplay();};
 $('show-lunar').onchange=event=>{preferences.showLunar=event.target.checked;applyPreferences();savePreferences();};

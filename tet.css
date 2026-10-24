@@ -1,0 +1,54 @@
+/* "Tết sum vầy" home style, on when body has .layout-tet (Settings > Kiểu màn hình chính, or automatically near Tết).
+   Loaded after modern.css and only overrides it: the page structure and remote navigation stay the same. */
+.tet-calendar{display:none}
+body.layout-tet{background:#5e0b0e;--accent:#f6d36b;--muted:#f3cfa9}
+body.layout-tet:before{background:radial-gradient(ellipse at 50% -15%,#d0333acc,transparent 60%),radial-gradient(ellipse at 100% 100%,#a3161b99,transparent 55%),linear-gradient(160deg,#8e1418,#5a0a0d);transform:none}
+body.layout-tet:after{background:radial-gradient(circle,#f6d36b14 1.5px,transparent 2px) 0 0/34px 34px}
+.layout-tet .quiet-tag{color:#f6d36b;border-color:#f6d36b55;background:#00000022}
+.layout-tet .quiet-tag span{background:#f6d36b}
+.layout-tet .eyebrow,.layout-tet .apps-heading .eyebrow{color:#f6d36b}
+
+/* Photo reel: gold frames on a darker red band. */
+.layout-tet .photo-reel{background:#00000026;box-shadow:inset 0 0 0 1px #f6d36b40}
+.layout-tet .reel-card{outline:3px solid #f6d36bd0;outline-offset:-3px}
+
+/* Sidebar becomes a tear-off calendar sheet (lịch bóc). */
+.layout-tet .today-sidebar{background:transparent;border:0;box-shadow:none;padding:0;backdrop-filter:none;justify-content:flex-start}
+.layout-tet .clock-widget,.layout-tet .lunar-card,.layout-tet .daily-note{display:none}
+.layout-tet .tet-calendar{display:flex;flex-direction:column;flex:1;min-height:0;background:#fff8e8;color:#7a1414;border-radius:22px;overflow:hidden;text-align:center;box-shadow:0 14px 34px #00000040}
+.tet-cal-band{background:#c62828;color:#f9dd84;font-size:13px;font-weight:700;letter-spacing:2.5px;padding:10px 8px;border-bottom:3px dashed #fff8e8}
+.tet-cal-day{font-size:clamp(70px,6.6vw,124px);font-weight:800;line-height:1;margin-top:10px;color:#b71c1c;font-variant-numeric:tabular-nums}
+.tet-cal-weekday{font-size:15px;font-weight:700;letter-spacing:3px;text-transform:uppercase;margin-top:4px}
+.tet-cal-lunar{margin:10px 18px 0;padding-top:10px;border-top:1px solid #e9c99a;font-size:14px;color:#8a4b0f;line-height:1.45}
+.tet-cal-lunar strong{display:block;font-size:20px;color:#7a1414}
+.tet-cal-clock{font-size:26px;font-weight:600;margin-top:8px;font-variant-numeric:tabular-nums;color:#7a1414}
+.tet-cal-wish{margin-top:auto;padding:12px 10px 14px;font:italic 600 20px/1.25 var(--serif,Georgia,serif);color:#b71c1c}
+.tet-cal-countdown{display:inline-block;margin:0 auto 14px;padding:5px 12px;border-radius:20px;background:#f6d36b;color:#7a1414;font-size:13px;font-weight:700}
+/* With the YouTube player open, the sheet keeps only the band, the day and the clock. */
+.layout-tet.music-active .tet-calendar{flex:0 0 auto}
+.layout-tet.music-active .tet-cal-lunar,.layout-tet.music-active .tet-cal-wish,.layout-tet.music-active .tet-cal-countdown{display:none}
+.layout-tet.music-active .tet-cal-day{font-size:clamp(46px,4vw,72px);margin-top:4px}
+.layout-tet.music-active .tet-cal-clock{margin:2px 0 10px;font-size:20px}
+
+.layout-tet .music-strip{background:#00000026;border-color:#f6d36b4d}
+.layout-tet .app-tile:focus-visible{outline-color:#f6d36b}
+
+/* Falling hoa mai: a dozen small blossoms, transform-only so a TV GPU keeps up. */
+.tet-petals{position:fixed;inset:0;z-index:-1;pointer-events:none;overflow:hidden}
+.tet-petals span{position:absolute;top:-40px;width:var(--size,20px);height:var(--size,20px);animation:mai-fall 14s linear infinite;opacity:.9}
+.tet-petals svg{width:100%;height:100%;display:block}
+@keyframes mai-fall{0%{transform:translate(0,0) rotate(0)}50%{transform:translate(40px,55vh) rotate(160deg)}100%{transform:translate(-20px,112vh) rotate(320deg)}}
+@media(prefers-reduced-motion:reduce){.tet-petals{display:none}}
+/* Shorter screens (TV browsers laid out at 1280x720): a tighter sheet so the wish and countdown stay visible. */
+@media(max-height:790px){
+.tet-cal-band{font-size:11px;padding:6px 6px;letter-spacing:2px}
+.tet-cal-day{font-size:56px;margin-top:4px}
+.tet-cal-weekday{font-size:12px;letter-spacing:2px;margin-top:2px}
+.tet-cal-lunar{margin:6px 12px 0;padding-top:6px;font-size:11px;line-height:1.35}
+.tet-cal-lunar strong{font-size:15px}
+.tet-cal-clock{font-size:19px;margin-top:4px}
+.tet-cal-wish{font-size:15px;padding:6px 8px 8px}
+.tet-cal-countdown{font-size:11px;padding:4px 9px;margin-bottom:9px}
+.layout-tet.music-active .tet-cal-day{font-size:38px}
+.layout-tet.music-active .tet-cal-clock{font-size:15px;margin-bottom:6px}
+}
