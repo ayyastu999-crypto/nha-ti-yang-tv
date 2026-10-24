@@ -12,7 +12,10 @@ self.addEventListener('fetch', event => {
   if (request.method !== 'GET' || new URL(request.url).origin !== self.location.origin) return;
   event.respondWith(caches.open(CACHE).then(async cache => {
     const cached = await cache.match(request, {ignoreSearch: true});
-    const fresh = fetch(request).then(response => {
+    // Revalidate with the server (a cheap 304 when unchanged) rather than reuse the browser's HTTP cache, which
+    // GitHub Pages lets keep a file for 10 minutes and would delay every update by that long.
+    // A navigation request cannot be re-issued with options, so its URL is fetched instead.
+    const fresh = fetch(request.mode === 'navigate' ? request.url : request, {cache: 'no-cache'}).then(response => {
       if (response.ok) cache.put(request, response.clone());
       return response;
     }).catch(() => cached);
