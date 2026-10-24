@@ -418,4 +418,34 @@ readStoredPhotos().then(stored=>{
     photos=stored.slice(0,24);customPhotos=true;spreadIndex=0;rebuildDots();renderSpread();
   }
 }).catch(()=>{});
+
+// Inside the Nhà Tí Yang TV app the window.TiYangTV bridge exists: tiles open the real apps on the TV.
+// A tile whose app is missing hides itself, unless it has a Play Store query to install it from.
+const tvBridge=window.TiYangTV;
+if(tvBridge){
+  document.body.classList.add('tv-launcher');
+  const appTiles=Array.from(document.querySelectorAll('.app-dock [data-package],.app-dock [data-app-label]'));
+  const tileName=tile=>tile.textContent.replace('↗','').trim();
+  const refreshAppTiles=()=>appTiles.forEach(tile=>{
+    const installed=tile.dataset.package?tvBridge.isInstalled(tile.dataset.package):tvBridge.hasAppLabeled(tile.dataset.appLabel);
+    tile.hidden=!installed&&!tile.dataset.storeQuery;
+  });
+  appTiles.forEach(tile=>{
+    tile.setAttribute('aria-label',`Mở ${tileName(tile)}`);
+    tile.addEventListener('click',event=>{
+      event.preventDefault();
+      const opened=tile.dataset.package?tvBridge.launchApp(tile.dataset.package):tvBridge.launchByLabel(tile.dataset.appLabel);
+      if(opened)return;
+      if(tile.dataset.storeQuery){tvBridge.openStoreSearch(tile.dataset.storeQuery);toast(`TV chưa có ${tileName(tile)}, mở Play Store để cài.`);}
+      else toast(`Chưa mở được ${tileName(tile)}.`);
+    });
+  });
+  document.querySelectorAll('[data-tv-action]').forEach(tile=>{
+    tile.hidden=false;
+    tile.onclick=()=>{if(!(tile.dataset.tvAction==='inputs'?tvBridge.openInputs():tvBridge.openTvSettings()))toast('TV chưa mở được mục này.');};
+  });
+  refreshAppTiles();
+  // Coming back from Play Store or another app: an app may have been installed or removed meanwhile.
+  document.addEventListener('visibilitychange',()=>{if(!document.hidden)refreshAppTiles();});
+}
 }

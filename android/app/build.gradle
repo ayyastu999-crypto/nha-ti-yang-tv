@@ -1,0 +1,35 @@
+plugins {
+    id 'com.android.application'
+}
+
+android {
+    namespace 'vn.tiyang.home'
+    compileSdk 34
+
+    defaultConfig {
+        applicationId 'vn.tiyang.home'
+        minSdk 26
+        targetSdk 34
+        versionCode 1
+        versionName '1.0'
+    }
+
+    // The web app in ../dist is bundled as an offline copy, so Home still works without internet.
+    sourceSets {
+        main.assets.srcDirs += ['../../dist']
+    }
+
+    buildTypes {
+        release {
+            // No R8: the @JavascriptInterface bridge is called by name from JavaScript.
+            minifyEnabled false
+            // Sideloaded over ADB, never published: sign with the debug key.
+            signingConfig signingConfigs.debug
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+}

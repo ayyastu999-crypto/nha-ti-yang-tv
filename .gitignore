@@ -7,3 +7,10 @@ Thumbs.db
 *.zip
 *.tar.gz
 .claude/settings.local.json
+
+# Android build outputs
+android/.gradle/
+android/app/build/
+android/build/
+android/local.properties
+*.apk
