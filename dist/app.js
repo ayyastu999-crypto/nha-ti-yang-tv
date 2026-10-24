@@ -1,5 +1,8 @@
 import {solarToLunar, vietnamDateParts, lunarYearName} from './lunar.mjs';
 
+// tv-fit.js runs this app inside a scaled frame on small TV viewports; the outer page then stays idle.
+if(!window.__tvFit){
+
 const $ = id => document.getElementById(id);
 const pad = value => String(value).padStart(2,'0');
 const monthNames = ['Giêng','Hai','Ba','Tư','Năm','Sáu','Bảy','Tám','Chín','Mười','Mười một','Chạp'];
@@ -225,7 +228,8 @@ document.querySelectorAll('[data-theme-choice]').forEach(button=>button.onclick=
 $('autoplay-speed').onchange=event=>{preferences.speed=Number(event.target.value);savePreferences();scheduleAutoplay();};
 $('show-lunar').onchange=event=>{preferences.showLunar=event.target.checked;applyPreferences();savePreferences();};
 $('fullscreen').onclick=async()=>{
-  try{if(document.fullscreenElement)await document.exitFullscreen();else if(document.documentElement.requestFullscreen)await document.documentElement.requestFullscreen();else toast('Trình duyệt này chưa hỗ trợ nút toàn màn hình.');}
+  const doc=window.top===window?document:window.top.document;
+  try{if(doc.fullscreenElement)await doc.exitFullscreen();else if(doc.documentElement.requestFullscreen)await doc.documentElement.requestFullscreen();else toast('Trình duyệt này chưa hỗ trợ nút toàn màn hình.');}
   catch{toast('Chưa bật được toàn màn hình trong cửa sổ này. Chị thử mở trực tiếp bản mẫu nhé.');}
 };
 
@@ -409,3 +413,4 @@ readStoredPhotos().then(stored=>{
     photos=stored.slice(0,24);customPhotos=true;spreadIndex=0;rebuildDots();renderSpread();
   }
 }).catch(()=>{});
+}
