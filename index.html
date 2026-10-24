@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#ebe6dc">
+  <meta name="description" content="Nhà Tí Yang — một cuốn album nhỏ trên màn hình lớn. Ảnh kỷ niệm, đồng hồ và lịch âm Việt Nam.">
+  <title>Nhà Tí Yang — Album TV</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="modern.css">
+</head>
+<body>
+  <svg class="svg-defs" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"><defs>
+    <symbol id="i-home" viewBox="0 0 24 24"><path d="m3 10 9-7 9 7v10H3Z"/><path d="M9 20v-7h6v7M7 9h.01M17 9h.01"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+    <symbol id="i-expand" viewBox="0 0 24 24"><path d="M8 3H3v5M16 3h5v5M3 16v5h5M21 16v5h-5"/></symbol>
+    <symbol id="i-settings" viewBox="0 0 24 24"><path d="m9 3-1 3-3 1-2 4 2 3v3l4 3 3-1 3 1 4-3v-3l2-3-2-4-3-1-1-3Z"/><circle cx="12" cy="12" r="3"/></symbol>
+    <symbol id="i-right" viewBox="0 0 24 24"><path d="m9 5 7 7-7 7"/></symbol>
+    <symbol id="i-left" viewBox="0 0 24 24"><path d="m15 5-7 7 7 7"/></symbol>
+    <symbol id="i-play" viewBox="0 0 24 24"><path d="m9 5 11 7-11 7Z"/></symbol>
+    <symbol id="i-pause" viewBox="0 0 24 24"><path d="M8 5v14M16 5v14"/></symbol>
+    <symbol id="i-image" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8" cy="8" r="1.5"/><path d="m3 16 5-5 5 6 4-4 4 4"/></symbol>
+    <symbol id="i-calendar" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M7 2v6M17 2v6M3 11h18M8 15h2M14 15h2M8 18h2"/></symbol>
+    <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20 15.6A9 9 0 0 1 8.4 4 9 9 0 1 0 20 15.6Z"/></symbol>
+    <symbol id="i-timer" viewBox="0 0 24 24"><circle cx="12" cy="14" r="8"/><path d="M9 2h6M12 2v4M12 10v4l3 2M18 5l2 2"/></symbol>
+    <symbol id="i-close" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"/></symbol>
+    <symbol id="i-music" viewBox="0 0 24 24"><path d="M9 17V6l11-3v12M9 10l11-3"/><ellipse cx="6" cy="18" rx="3" ry="2.5"/><ellipse cx="17" cy="16" rx="3" ry="2.5"/></symbol>
+    <symbol id="i-heart" viewBox="0 0 24 24"><path d="M20.5 4.5a5 5 0 0 0-7.1 0L12 6l-1.4-1.5a5 5 0 0 0-7.1 7.1L12 20l8.5-8.4a5 5 0 0 0 0-7.1Z"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"/></symbol>
+  </defs></svg>
+
+  <div class="shell">
+    <header class="header">
+      <button class="brand" id="brand" aria-label="Về trang Nhà Tí Yang"><span class="brand-mark"><svg><use href="#i-home"/></svg></span><span>nhà Tí Yang<span class="brand-dot">.</span></span></button>
+      <nav class="top-nav" aria-label="Điều hướng chính">
+        <button class="nav-item active" id="nav-home" aria-current="page">Khoảnh khắc</button>
+        <button class="nav-item" id="nav-albums">Album của nhà</button>
+        <button class="nav-item" id="nav-calendar">Lịch nhà Tí Yang</button>
+      </nav>
+      <div class="header-actions">
+        <button class="add-photos" id="add-photos"><svg><use href="#i-plus"/></svg><span>Thêm ảnh</span></button>
+        <button class="icon-button" id="fullscreen" aria-label="Bật hoặc tắt toàn màn hình" title="Toàn màn hình"><svg><use href="#i-expand"/></svg></button>
+        <button class="avatar-button" id="settings" aria-label="Tùy chỉnh giao diện"><svg><use href="#i-settings"/></svg></button>
+      </div>
+    </header>
+
+    <main>
+      <section class="intro" aria-labelledby="page-title">
+        <div><p class="eyebrow" id="greeting">MỘT GÓC NHỎ, THẬT NHIỀU THƯƠNG</p><h1 id="page-title">Những ngày mình có nhau.</h1></div>
+        <span class="quiet-tag"><span></span> Góc bình yên của nhà Tí Yang</span>
+      </section>
+
+      <div class="stage">
+        <section class="album-area" aria-label="Album kỷ niệm">
+          <div class="book" id="book">
+            <div class="book-pages">
+              <div class="paper page-left">
+                <div class="page-kicker"><span id="spread-kicker">NHỮNG NGÀY ĐI XA</span><span class="sample-tag" id="sample-tag">Ảnh minh họa</span></div>
+                <button class="photo photo-main" id="photo-main" aria-label="Xem ảnh lớn"><span class="tape tape-main" aria-hidden="true"></span><img id="main-image" src="assets/photo-1.jpg" alt="Phong cảnh yên bình trong album" fetchpriority="high"><span class="photo-zoom"><svg><use href="#i-expand"/></svg></span></button>
+                <div class="main-caption"><div><h2 id="spread-title">Một ngày, chẳng cần vội.</h2><p id="spread-subtitle">Chỉ cần đi cùng nhau là đủ.</p></div><svg class="sketch-heart" aria-hidden="true"><use href="#i-heart"/></svg></div>
+                <span class="page-number" id="left-page-number">01</span>
+              </div>
+              <div class="paper page-right">
+                <div class="right-note"><span>gửi những ngày thật đẹp</span><svg viewBox="0 0 120 35" aria-hidden="true"><path d="M3 8c20 22 69 25 105 5m-14-5 17 4-7 13"/></svg></div>
+                <button class="photo photo-small photo-top" id="photo-top" aria-label="Xem ảnh thứ hai"><span class="tape" aria-hidden="true"></span><img id="top-image" src="assets/photo-2.jpg" alt="Một khoảnh khắc trong chuyến đi"><span class="hand-caption" id="top-caption">mình cứ thong thả thôi...</span></button>
+                <button class="photo photo-small photo-bottom" id="photo-bottom" aria-label="Xem ảnh thứ ba"><span class="tape" aria-hidden="true"></span><img id="bottom-image" src="assets/photo-3.jpg" alt="Ánh sáng trong một ngày đẹp"><span class="hand-caption" id="bottom-caption">...và giữ lại những điều bé xíu.</span></button>
+                <span class="memory-stamp" aria-hidden="true">little<br><em>moments</em><span>BIG MEMORIES</span></span>
+                <span class="page-number" id="right-page-number">02</span>
+              </div>
+              <div class="book-spine" aria-hidden="true"></div>
+            </div>
+          </div>
+          <div class="album-toolbar">
+            <button class="collection-name" id="open-collection"><svg><use href="#i-image"/></svg><span id="collection-label">Những ngày đi xa</span><svg class="tiny-chevron"><use href="#i-right"/></svg></button>
+            <div class="spread-dots" id="spread-dots" aria-label="Chọn trang album"></div>
+            <div class="album-controls"><button class="icon-button autoplay-button" id="autoplay" aria-label="Tự động lật trang" aria-pressed="false"><svg><use href="#i-play"/></svg></button><span class="control-divider"></span><button class="icon-button" id="prev-spread" aria-label="Trang album trước"><svg><use href="#i-left"/></svg></button><button class="icon-button" id="next-spread" aria-label="Trang album tiếp theo"><svg><use href="#i-right"/></svg></button></div>
+          </div>
+        </section>
+
+        <aside class="today-sidebar" aria-label="Đồng hồ và lịch hôm nay">
+          <div class="clock-widget"><p class="eyebrow" id="day-greeting">CHÀO BUỔI TỐI</p><div class="clock" id="clock" aria-label="Giờ hiện tại tại Việt Nam"><span id="clock-hours">--</span><span class="clock-colon">:</span><span id="clock-minutes">--</span></div><p id="solar-date" class="solar-date">Đang lấy ngày hôm nay</p><p class="timezone">Giờ Việt Nam <span>·</span> UTC+7</p></div>
+          <button class="lunar-card" id="lunar-card" aria-label="Mở lịch âm dương">
+            <span class="lunar-header"><span><svg><use href="#i-moon"/></svg> LỊCH ÂM</span><svg class="lunar-arrow"><use href="#i-right"/></svg></span>
+            <span class="lunar-date"><span id="lunar-day" class="lunar-day">--</span><span class="lunar-month"><strong id="lunar-month">Tháng —</strong><span id="lunar-year">Năm —</span></span></span>
+            <span class="lunar-footer"><span class="moon-dot" aria-hidden="true"></span><span id="lunar-note">Một ngày mới để yêu thương</span></span>
+          </button>
+          <div class="daily-note"><span class="note-flower" aria-hidden="true">✳</span><p>Hạnh phúc đôi khi<br>chỉ là <em>cùng nhau ở nhà.</em></p><span class="note-line"></span></div>
+          <section class="youtube-widget" id="youtube-widget" aria-label="Video nhạc YouTube" hidden><div class="youtube-widget-head"><span>YOUTUBE MUSIC</span><button class="icon-button" id="close-youtube" aria-label="Dừng và đóng video nhạc"><svg><use href="#i-close"/></svg></button></div><div class="youtube-frame"><div id="youtube-player"></div></div><p id="youtube-status" aria-live="polite">Đang mở trình phát…</p></section>
+        </aside>
+      </div>
+
+      <section class="music-strip" aria-label="Thanh âm nhạc YouTube"><button class="music-record" id="music-choose" aria-label="Chọn nhạc YouTube"><span class="record-disc"><span></span></span></button><div class="music-track"><p class="music-source"><span class="youtube-dot"></span> YOUTUBE MUSIC</p><strong id="music-title">Top nhạc trẻ thịnh hành</strong><span id="music-subtitle">Một chút âm nhạc cho khoảnh khắc này</span></div><div class="music-buttons"><button class="icon-button" id="music-prev" aria-label="Bài nhạc trước"><svg viewBox="0 0 24 24"><path d="M5 5v14m14-14L8 12l11 7Z"/></svg></button><button class="music-play" id="music-play" aria-label="Phát nhạc YouTube" aria-pressed="false"><svg><use href="#i-play"/></svg></button><button class="icon-button" id="music-next" aria-label="Bài nhạc tiếp theo"><svg viewBox="0 0 24 24"><path d="M19 5v14M5 5l11 7-11 7Z"/></svg></button></div><div class="music-progress"><div><span id="music-elapsed">0:00</span><span id="music-duration">—</span></div><input id="music-seek" type="range" min="0" max="100" value="0" disabled aria-label="Tua bài nhạc"></div><button class="music-library" id="music-library"><svg><use href="#i-music"/></svg> Chọn nhạc</button><a class="music-top-link" href="https://www.youtube.com/playlist?list=PL4fGSI1pDJn4bRKr6tjRWaGlqRg_zY_is" target="_blank" rel="noopener noreferrer">Top nhạc YouTube <span>↗</span></a></section>
+
+      <section class="apps-section" aria-label="Các ứng dụng nhỏ">
+        <div class="apps-heading"><span class="eyebrow">MỘT CHẠM, CẢ NHÀ VUI</span><span class="apps-hint">Những điều quen thuộc</span></div>
+        <div class="app-dock">
+          <button class="app-tile" id="app-album"><span class="app-icon album-icon"><svg><use href="#i-image"/></svg></span><span>Ảnh của nhà</span></button>
+          <a class="app-tile" href="https://www.youtube.com/" target="_blank" rel="noopener noreferrer" aria-label="Mở YouTube trên web"><span class="app-icon youtube-icon"><svg viewBox="0 0 40 32" aria-hidden="true"><rect x="1" y="3" width="38" height="26" rx="8" fill="#fff"/><path d="m16 10 12 6-12 6Z" fill="#e65042"/></svg></span><span>YouTube <span class="external-mark">↗</span></span></a>
+          <a class="app-tile" href="https://open.spotify.com/" target="_blank" rel="noopener noreferrer" aria-label="Mở Spotify trên web"><span class="app-icon music-icon"><svg viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="17" fill="#f0f2d9"/><path d="M10 15q11-5 22 1M12 21q9-4 17 1M14 27q7-3 13 0" fill="none" stroke="#406a51" stroke-width="3" stroke-linecap="round"/></svg></span><span>Spotify <span class="external-mark">↗</span></span></a>
+          <a class="app-tile" href="https://www.netflix.com/" target="_blank" rel="noopener noreferrer" aria-label="Mở Netflix trên web"><span class="app-icon netflix-icon"><span aria-hidden="true">N</span></span><span>Netflix <span class="external-mark">↗</span></span></a>
+          <a class="app-tile" href="https://vtvgo.vn/" target="_blank" rel="noopener noreferrer" aria-label="Mở VTVgo trên web"><span class="app-icon vtvgo-icon"><span aria-hidden="true">VTV<em>go</em></span></span><span>VTVgo <span class="external-mark">↗</span></span></a>
+          <span class="dock-divider" aria-hidden="true"></span>
+          <button class="app-tile" id="app-calendar"><span class="app-icon calendar-icon"><svg><use href="#i-calendar"/></svg></span><span>Lịch âm dương</span></button>
+          <button class="app-tile" id="app-timer"><span class="app-icon timer-icon"><svg><use href="#i-timer"/></svg><i id="timer-indicator" hidden></i></span><span>Hẹn giờ</span></button>
+          <button class="app-tile" id="app-settings"><span class="app-icon settings-icon"><svg><use href="#i-settings"/></svg></span><span>Tùy chỉnh</span></button>
+        </div>
+      </section>
+    </main>
+    <footer class="footer"><span><svg><use href="#i-heart"/></svg> Những khoảnh khắc của nhà, trên màn hình lớn.</span><span class="remote-hint"><kbd>←</kbd><kbd>↑</kbd><kbd>↓</kbd><kbd>→</kbd> Di chuyển <kbd>OK</kbd> Chọn <kbd>Esc</kbd> Trở về</span></footer>
+  </div>
+
+  <dialog id="album-dialog" class="dialog wide-dialog" aria-labelledby="album-dialog-title"><div class="dialog-head"><div><p class="eyebrow">GIỮ LẠI NHỮNG ĐIỀU THƯƠNG</p><h2 id="album-dialog-title">Album của nhà</h2></div><button class="icon-button" data-close aria-label="Đóng album"><svg><use href="#i-close"/></svg></button></div><div class="album-dialog-toolbar"><p id="gallery-summary">Ảnh minh họa cho cuốn album của chị.</p><button class="primary-button" id="gallery-add"><svg><use href="#i-plus"/></svg> Thêm ảnh của nhà</button></div><div id="gallery" class="gallery"></div><p class="helper-text">Ảnh chị chọn được lưu trên trình duyệt này. Chọn một ảnh để xem lớn.</p></dialog>
+
+  <dialog id="photo-dialog" class="dialog photo-dialog" aria-label="Xem ảnh lớn"><button class="icon-button photo-close" data-close aria-label="Đóng ảnh lớn"><svg><use href="#i-close"/></svg></button><img id="lightbox-image" alt=""><div class="lightbox-footer"><button class="icon-button" id="lightbox-prev" aria-label="Ảnh trước"><svg><use href="#i-left"/></svg></button><p id="lightbox-caption"></p><button class="icon-button" id="lightbox-next" aria-label="Ảnh tiếp theo"><svg><use href="#i-right"/></svg></button></div></dialog>
+
+  <dialog id="calendar-dialog" class="dialog calendar-dialog" aria-labelledby="calendar-title"><div class="dialog-head"><div><p class="eyebrow">NGÀY THÁNG CỦA NHÀ TÍ YANG</p><h2 id="calendar-title">Lịch âm dương</h2></div><button class="icon-button" data-close aria-label="Đóng lịch"><svg><use href="#i-close"/></svg></button></div><div class="month-switch"><button class="icon-button" id="calendar-prev" aria-label="Tháng trước"><svg><use href="#i-left"/></svg></button><h3 id="calendar-month-title"></h3><button class="icon-button" id="calendar-next" aria-label="Tháng sau"><svg><use href="#i-right"/></svg></button><button class="text-button" id="calendar-today">Hôm nay</button></div><div class="calendar-week"><span>T2</span><span>T3</span><span>T4</span><span>T5</span><span>T6</span><span>T7</span><span>CN</span></div><div id="calendar-grid" class="calendar-grid"></div><div id="selected-day" class="selected-day" aria-live="polite"></div><p class="helper-text">Số nhỏ là ngày âm lịch Việt Nam · UTC+7</p></dialog>
+
+  <dialog id="settings-dialog" class="dialog settings-dialog" aria-labelledby="settings-title"><div class="dialog-head"><div><p class="eyebrow">THEO CÁCH CỦA NHÀ TÍ YANG</p><h2 id="settings-title">Một chút tùy chỉnh</h2></div><button class="icon-button" data-close aria-label="Đóng tùy chỉnh"><svg><use href="#i-close"/></svg></button></div><fieldset class="setting-field"><legend>Màu của căn phòng</legend><div class="theme-options"><button class="theme-choice" data-theme-choice="warm"><span class="theme-swatch swatch-warm"></span>Điện ảnh</button><button class="theme-choice" data-theme-choice="sage"><span class="theme-swatch swatch-sage"></span>Xanh đêm</button><button class="theme-choice" data-theme-choice="night"><span class="theme-swatch swatch-night"></span>Tối giản</button></div></fieldset><label class="setting-row" for="autoplay-speed"><span>Thời gian mỗi trang ảnh</span><select id="autoplay-speed"><option value="3000">3 giây</option><option value="8000">8 giây</option><option value="15000">15 giây</option><option value="30000">30 giây</option></select></label><label class="setting-row" for="show-lunar"><span>Hiện lịch âm ở trang chính</span><input type="checkbox" id="show-lunar" checked></label><div class="setting-row"><span>Ảnh trong album</span><button class="text-button" id="restore-demo">Dùng ảnh minh họa</button></div><p class="helper-text">Dùng phím mũi tên để di chuyển và Enter để chọn. Toàn màn hình phù hợp khi xem trên TV.</p><details class="credits"><summary>Về bản mẫu</summary><p>Nhà Tí Yang là bản mẫu giao diện TV trên trình duyệt. Các biểu tượng YouTube, Spotify và Netflix mở trang web tương ứng.</p><p>Lịch âm dựa trên thuật toán của <a href="https://xemamlich.uhm.vn/calrules.html" target="_blank" rel="noopener noreferrer">Hồ Ngọc Đức</a>, theo múi giờ Việt Nam.</p><div id="photo-credits"></div></details></dialog>
+
+  <dialog id="timer-dialog" class="dialog timer-dialog" aria-labelledby="timer-title"><div class="dialog-head"><div><p class="eyebrow">DÀNH MỘT KHOẢNG CHO MÌNH</p><h2 id="timer-title">Hẹn giờ</h2></div><button class="icon-button" data-close aria-label="Đóng hẹn giờ"><svg><use href="#i-close"/></svg></button></div><div id="timer-readout" class="timer-readout" aria-live="off">15:00</div><div class="timer-presets"><button data-minutes="5">5 phút</button><button data-minutes="15" class="selected">15 phút</button><button data-minutes="30">30 phút</button><button data-minutes="60">60 phút</button></div><div class="timer-actions"><button id="timer-start" class="primary-button">Bắt đầu</button><button id="timer-reset" class="text-button">Đặt lại</button></div><p class="helper-text" id="timer-note">Thông báo sẽ hiện khi hết giờ, trong lúc trang đang mở.</p></dialog>
+  <dialog id="music-dialog" class="dialog music-dialog" aria-labelledby="music-dialog-title"><div class="dialog-head"><div><p class="eyebrow">NHẠC CHO NHỮNG NGÀY Ở NHÀ</p><h2 id="music-dialog-title">Nhà Tí Yang nghe gì?</h2></div><button class="icon-button" data-close aria-label="Đóng chọn nhạc"><svg><use href="#i-close"/></svg></button></div><button class="music-option" data-music="top"><span class="music-option-icon">♫</span><span><strong>Top nhạc trẻ thịnh hành</strong><small>100 bài hát hàng đầu Việt Nam tuần này · YouTube Charts</small></span><svg><use href="#i-play"/></svg></button><button class="music-option" data-music="lofi"><span class="music-option-icon lofi-option">♧</span><span><strong>Chillhop Radio</strong><small>Lofi phát trực tiếp cho một buổi tối bình yên</small></span><svg><use href="#i-play"/></svg></button><form id="youtube-link-form"><label for="youtube-link">Hoặc dán link bài hát / playlist của chị</label><div class="youtube-link-row"><input id="youtube-link" type="url" placeholder="https://www.youtube.com/watch?v=…" required><button class="primary-button" type="submit">Phát</button></div></form><a class="text-button chart-link" href="https://charts.youtube.com/" target="_blank" rel="noopener noreferrer">Xem YouTube Charts ↗</a><p class="helper-text">Nhạc phát bằng trình phát YouTube. Nếu bài hát không cho phát nhúng, chị mở bằng nút Top nhạc YouTube hoặc chọn một link khác nhé.</p></dialog>
+  <input type="file" id="file-input" accept="image/jpeg,image/png,image/webp,image/avif" multiple hidden>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <script type="module" src="app.js"></script>
+</body>
+</html>

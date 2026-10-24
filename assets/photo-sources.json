@@ -1,0 +1,62 @@
+[
+  {
+    "file": "rice-terraces.jpg",
+    "author": "Peter Hammer",
+    "source": "https://unsplash.com/photos/scenery-of-rice-fields-ggQy5lGtwb0",
+    "image_url": "https://images.unsplash.com/photo-1516484681091-7d83961805f4?auto=format&fit=crop&w=1600&q=85",
+    "alt": "Ruộng bậc thang, mái nhà và núi xa tại Y Tý, Việt Nam trong ánh chiều",
+    "caption": "Một chiều về miền xanh",
+    "license": "Unsplash License",
+    "usage": "Ảnh minh họa, không phải ảnh gia đình người dùng"
+  },
+  {
+    "file": "lakeside-trail.jpg",
+    "author": "Sylvain Cleymans",
+    "source": "https://unsplash.com/photos/a-trail-winds-through-a-grassy-field-with-mountains-in-the-background-kSqE3Hnphuw",
+    "image_url": "https://images.unsplash.com/photo-1713860015848-9662c0d5ab43?auto=format&fit=crop&w=1600&q=85",
+    "alt": "Lối mòn qua đồng cỏ vàng cạnh hồ xanh và núi cao",
+    "caption": "Những ngày cùng nhau đi xa",
+    "license": "Unsplash License",
+    "usage": "Ảnh minh họa, không phải ảnh gia đình người dùng"
+  },
+  {
+    "file": "ninh-binh.jpg",
+    "author": "seb.",
+    "source": "https://unsplash.com/photos/green-grass-field-near-lake-during-daytime-MOsRi5Ou_mU",
+    "image_url": "https://images.unsplash.com/photo-1581849777206-31dd2f1fe80e?auto=format&fit=crop&w=1600&q=85",
+    "alt": "Dòng nước phản chiếu núi xa giữa đồng xanh Ninh Bình",
+    "caption": "Bình yên ở thật gần",
+    "license": "Unsplash License",
+    "usage": "Ảnh minh họa, không phải ảnh gia đình người dùng"
+  },
+  {
+    "file": "wildflowers.jpg",
+    "author": "Damian",
+    "source": "https://unsplash.com/photos/wildflowers-bloom-in-a-sunny-green-meadow-wpofCJ9fCCc",
+    "image_url": "https://images.unsplash.com/photo-1745691635270-62e173bccb98?auto=format&fit=crop&w=1400&q=85",
+    "alt": "Những bông hoa cúc trắng nhỏ trong đồng cỏ ngập nắng",
+    "caption": "Một góc nắng của riêng mình",
+    "license": "Unsplash License",
+    "usage": "Ảnh minh họa, không phải ảnh gia đình người dùng"
+  },
+  {
+    "file": "sea-sunset.jpg",
+    "author": "marina negrete",
+    "source": "https://unsplash.com/photos/calm-sea-during-sunset-6cVfi9tHyOA",
+    "image_url": "https://images.unsplash.com/photo-1543232299-a965e0b50207?auto=format&fit=crop&w=1600&q=85",
+    "alt": "Bờ biển lặng dưới bầu trời hoàng hôn ở Cantabria",
+    "caption": "Hẹn nhau một chiều ở biển",
+    "license": "Unsplash License",
+    "usage": "Ảnh minh họa, không phải ảnh gia đình người dùng"
+  },
+  {
+    "file": "golden-sea.jpg",
+    "author": "Giorgio Trovato",
+    "source": "https://unsplash.com/photos/calm-sea-under-orange-sky-during-sunset-cIcfyNgrVE0",
+    "image_url": "https://images.unsplash.com/photo-1582780605564-e0eae2fe6907?auto=format&fit=crop&w=1600&q=85",
+    "alt": "Ánh nắng vàng in trên mặt nước dưới trời cam lúc hoàng hôn",
+    "caption": "Giữ lại một chút nắng",
+    "license": "Unsplash License",
+    "usage": "Ảnh minh họa, không phải ảnh gia đình người dùng"
+  }
+]
