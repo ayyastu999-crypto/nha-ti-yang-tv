@@ -261,7 +261,12 @@ document.addEventListener('keydown',event=>{
   if(focused.tagName==='SELECT'&&!['ArrowLeft','ArrowRight'].includes(event.key))return;
   const dialogs=Array.from(document.querySelectorAll('dialog[open]'));
   const activeDialog=dialogs.at(-1);
-  if(event.key==='Backspace'&&activeDialog){event.preventDefault();activeDialog.close();return;}
+  // Remote Back (GoBack/BrowserBack on Android TV browsers) closes the open dialog; with none open it is left to the browser.
+  if(['Backspace','GoBack','BrowserBack'].includes(event.key)&&activeDialog){event.preventDefault();activeDialog.close();return;}
+  // Remote media buttons drive the YouTube music bar.
+  const mediaButton={MediaPlayPause:'music-play',MediaPlay:'music-play',MediaPause:'music-play',MediaTrackNext:'music-next',MediaTrackPrevious:'music-prev'}[event.key];
+  if(mediaButton){event.preventDefault();const playing=document.body.classList.contains('music-playing');
+    if((event.key==='MediaPlay'&&playing)||(event.key==='MediaPause'&&!playing))return;$(mediaButton).click();return;}
   if(!['ArrowLeft','ArrowRight','ArrowUp','ArrowDown'].includes(event.key))return;
   if(activeDialog===$('photo-dialog')&&['ArrowLeft','ArrowRight'].includes(event.key)){
     event.preventDefault();openPhoto(lightboxIndex+(event.key==='ArrowRight'?1:-1));return;
