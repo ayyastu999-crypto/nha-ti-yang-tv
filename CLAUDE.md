@@ -65,6 +65,8 @@ This archive is intended for continued development in Claude Code. Read `README.
 - Back/Home in the app dispatch a `GoBack` key into the page; the activity never finishes. Use plain
   `requestFocus()` — a directional request makes WebView jump to the first control and overrides the restored focus.
 - Verified on the MiTV-MOOQ0 (Android 10) on 24/10/2026: every tile opens its app, Home returns, boots into it.
+- The "AYYA Studio" tile opens `vn.ayyastudio.home`, the studio's project showcase (a separate app, built from
+  the sibling `ayya-studio-tv` project); like every `data-package` tile it hides itself when that app is not installed.
 
 ## Scope of future work
 

@@ -89,7 +89,7 @@ button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,su
 .tv360-icon{background:linear-gradient(145deg,#ff4d4d,#c4161c)}
 .fptplay-icon>span,.tv360-icon>span{color:#fff;font-size:20px;font-weight:900;line-height:1;text-align:center}
 .fptplay-icon em,.tv360-icon em{display:block;font-style:normal;font-weight:600;font-size:.8em}
-.oldhome-icon{background:linear-gradient(145deg,#3a3f4b,#1c1f26)}.oldhome-icon>svg{color:#e9ecf2}
+.oldhome-icon{background:linear-gradient(145deg,#3a3f4b,#1c1f26)}.oldhome-icon>svg{color:#e9ecf2}.ayya-icon{background:#faf7f2}.ayya-icon>span{display:grid;place-items:center;width:52%;height:52%;border:2px solid #1a1a1a;color:#1a1a1a;font:500 26px/1 Georgia,'Playfair Display',serif}
 .inputs-icon{background:linear-gradient(145deg,#6aa9ff,#2f6fe0)}.inputs-icon>svg{color:#fff}
 .tvsettings-icon{background:linear-gradient(145deg,#b8c0cc,#7d8796)}.tvsettings-icon>svg{color:#fff}
 
