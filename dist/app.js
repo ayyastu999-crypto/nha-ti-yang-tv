@@ -112,7 +112,7 @@ function renderSpread() {
     button.setAttribute('aria-label',`Xem ảnh: ${photo.caption}`);button.onclick=()=>openPhoto(photoIndex);
   });
   $('spread-title').textContent=spread.title;$('spread-subtitle').textContent=spread.subtitle;
-  $('spread-kicker').textContent=spread.kicker;$('collection-label').textContent=spread.collection;
+  $('spread-kicker').textContent=spread.kicker;$('collection-label').textContent='Xem tất cả ảnh';
   $('top-caption').textContent=spread.captions[0];$('bottom-caption').textContent=spread.captions[1];
   $('sample-tag').textContent=customPhotos||familyAlbum?'Ảnh của nhà':'Ảnh minh họa';
   $('left-page-number').textContent=pad(spreadIndex*2+1);$('right-page-number').textContent=pad(spreadIndex*2+2);
