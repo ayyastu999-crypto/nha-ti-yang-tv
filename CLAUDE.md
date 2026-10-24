@@ -47,6 +47,7 @@ This archive is intended for continued development in Claude Code. Read `README.
 - Brand and copy: "nhà mình" → "nhà Tí Yang" in all UI text. Storage keys (`nha-minh-*`) are unchanged on purpose so saved photos and preferences survive.
 - Album: autoplay is on at load, 3 seconds by default (options 3/8/15/30 s); spreads slide in sideways (`spread-slide-next`/`-back` in `modern.css`), disabled under reduced motion by `style.css`.
 - TV fit: `dist/tv-fit.js` (loaded first, classic script) runs the app inside a frame laid out at ≥1280×720 and scaled down when a landscape viewport is smaller (Android TV browsers report 960×540 or less). `app.js` is wrapped in `if(!window.__tvFit)` so the outer page stays idle; fullscreen targets `window.top`.
+- Remote keys: Back (`Backspace`/`GoBack`/`BrowserBack`) closes an open dialog and is otherwise left to the browser; media Play/Pause/Next/Previous drive the music bar. Home, volume, mute, power and input stay with the TV.
 - D-pad navigation: candidates must lie wholly past the focused edge, scored like Android's FocusFinder (13 × edge gap² + centre offset²); Left/Right stay within the same row and stop at its end.
 
 ## Deployment
