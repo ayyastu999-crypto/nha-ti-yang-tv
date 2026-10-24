@@ -82,3 +82,13 @@ button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,su
 .vtvgo-icon em{font-style:normal;font-weight:600;font-size:.72em;margin-left:1px}
 @media(min-width:1600px){.vtvgo-icon>span{font-size:30px}}
 @media(max-width:999px),(min-width:1000px) and (max-height:790px){.vtvgo-icon>span{font-size:19px}}
+
+/* Launcher mode (inside the Nhà Tí Yang TV app): native app tiles and TV actions. */
+.tv-launcher .external-mark,.tv-launcher #app-settings{display:none}
+.fptplay-icon{background:linear-gradient(145deg,#ff8a3d,#e8571b)}
+.tv360-icon{background:linear-gradient(145deg,#ff4d4d,#c4161c)}
+.fptplay-icon>span,.tv360-icon>span{color:#fff;font-size:20px;font-weight:900;line-height:1;text-align:center}
+.fptplay-icon em,.tv360-icon em{display:block;font-style:normal;font-weight:600;font-size:.8em}
+.oldhome-icon{background:linear-gradient(145deg,#3a3f4b,#1c1f26)}.oldhome-icon>svg{color:#e9ecf2}
+.inputs-icon{background:linear-gradient(145deg,#6aa9ff,#2f6fe0)}.inputs-icon>svg{color:#fff}
+.tvsettings-icon{background:linear-gradient(145deg,#b8c0cc,#7d8796)}.tvsettings-icon>svg{color:#fff}
