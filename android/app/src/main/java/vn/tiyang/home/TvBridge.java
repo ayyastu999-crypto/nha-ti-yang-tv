@@ -8,6 +8,9 @@ import android.net.Uri;
 import android.provider.Settings;
 import android.webkit.JavascriptInterface;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 import java.util.Locale;
 
@@ -61,6 +64,19 @@ class TvBridge {
     @JavascriptInterface
     public boolean openTvSettings() {
         return start(new Intent(Settings.ACTION_SETTINGS));
+    }
+
+    /** The private family album packed into the APK (assets/family/album.json), or "" when this build has none. */
+    @JavascriptInterface
+    public String familyAlbum() {
+        try (InputStream in = activity.getAssets().open("family/album.json")) {
+            ByteArrayOutputStream out = new ByteArrayOutputStream();
+            byte[] buffer = new byte[8192];
+            for (int n; (n = in.read(buffer)) > 0; ) out.write(buffer, 0, n);
+            return out.toString("UTF-8");
+        } catch (IOException e) {
+            return "";
+        }
     }
 
     /** TV-style launch first, then a phone launcher entry, then a HOME entry (the old launcher has only that). */

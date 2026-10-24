@@ -9,6 +9,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.WindowManager;
 import android.webkit.MimeTypeMap;
+import android.webkit.ServiceWorkerClient;
+import android.webkit.ServiceWorkerController;
 import android.webkit.WebChromeClient;
 import android.webkit.WebResourceError;
 import android.webkit.WebResourceRequest;
@@ -61,6 +63,14 @@ public class MainActivity extends Activity {
         s.setCacheMode(WebSettings.LOAD_DEFAULT);
 
         web.addJavascriptInterface(new TvBridge(this), "TiYangTV");
+        // The live site runs a service worker; requests it passes on are reported here, not to the WebViewClient,
+        // so the album pictures (served from the APK) need the same answer on this path.
+        ServiceWorkerController.getInstance().setServiceWorkerClient(new ServiceWorkerClient() {
+            @Override
+            public WebResourceResponse shouldInterceptRequest(WebResourceRequest request) {
+                return serveAsset(request);
+            }
+        });
         web.setWebChromeClient(new WebChromeClient());
         web.setWebViewClient(new HomeClient());
         web.loadUrl(REMOTE_URL);
@@ -102,6 +112,22 @@ public class MainActivity extends Activity {
         super.onPause();
     }
 
+    /** Answers requests for LOCAL_HOST from the APK's assets (the offline copy and the private family album). */
+    private WebResourceResponse serveAsset(WebResourceRequest request) {
+        Uri url = request.getUrl();
+        if (!LOCAL_HOST.equals(url.getHost())) return null;
+        String path = url.getPath() == null || url.getPath().equals("/") ? "index.html" : url.getPath().substring(1);
+        AssetManager assets = getAssets();
+        try {
+            String ext = MimeTypeMap.getFileExtensionFromUrl(path);
+            String mime = "mjs".equals(ext) || "js".equals(ext) ? "text/javascript"
+                    : MimeTypeMap.getSingleton().getMimeTypeFromExtension(ext);
+            return new WebResourceResponse(mime == null ? "application/octet-stream" : mime, "utf-8", assets.open(path));
+        } catch (IOException e) {
+            return new WebResourceResponse("text/plain", "utf-8", 404, "Not Found", null, null);
+        }
+    }
+
     private boolean isOnline() {
         ConnectivityManager cm = getSystemService(ConnectivityManager.class);
         NetworkInfo info = cm == null ? null : cm.getActiveNetworkInfo();
@@ -111,18 +137,7 @@ public class MainActivity extends Activity {
     private class HomeClient extends WebViewClient {
         @Override
         public WebResourceResponse shouldInterceptRequest(WebView view, WebResourceRequest request) {
-            Uri url = request.getUrl();
-            if (!LOCAL_HOST.equals(url.getHost())) return null;
-            String path = url.getPath() == null || url.getPath().equals("/") ? "index.html" : url.getPath().substring(1);
-            AssetManager assets = getAssets();
-            try {
-                String ext = MimeTypeMap.getFileExtensionFromUrl(path);
-                String mime = "mjs".equals(ext) || "js".equals(ext) ? "text/javascript"
-                        : MimeTypeMap.getSingleton().getMimeTypeFromExtension(ext);
-                return new WebResourceResponse(mime == null ? "application/octet-stream" : mime, "utf-8", assets.open(path));
-            } catch (IOException e) {
-                return new WebResourceResponse("text/plain", "utf-8", 404, "Not Found", null, null);
-            }
+            return serveAsset(request);
         }
 
         @Override

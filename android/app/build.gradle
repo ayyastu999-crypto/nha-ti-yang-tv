@@ -17,6 +17,10 @@ android {
     // The web app in ../dist is bundled as an offline copy, so Home still works without internet.
     sourceSets {
         main.assets.srcDirs += ['../../dist']
+        // Family photos stay out of the public repo: a private folder holding family/album.json and the pictures
+        // (-PprivateAssetsDir=..., default ../../../tv-private-assets) is packed into the APK only when it exists.
+        def privateAssets = file(providers.gradleProperty('privateAssetsDir').getOrElse('../../../tv-private-assets'))
+        if (privateAssets.exists()) main.assets.srcDirs += [privateAssets]
     }
 
     buildTypes {
