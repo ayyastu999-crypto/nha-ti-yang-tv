@@ -27,7 +27,7 @@ const demoSpreads = [
 // The album shown when nothing was added on this device: the demo photos, or the family album inside the TV app.
 let basePhotos=demoPhotos, baseSpreads=demoSpreads, familyAlbum=false;
 let photos = [...demoPhotos], customPhotos=false, spreadIndex=0, lightboxIndex=0;
-let autoplay=true, autoplayInterval=null, toastTimeout=null, calendarYear, calendarMonth, chosenDay;
+let autoplay=true, toastTimeout=null, calendarYear, calendarMonth, chosenDay;
 let timerMinutes=15, timerRemaining=900000, timerDeadline=null, timerFinished=false;
 
 function toast(message, duration=4300) {
@@ -60,7 +60,40 @@ function spreads() {
     captions:['cất ở đây một chút thương','những ngày mình có nhau.']
   }));
 }
+// Photo reel: one card per photo at its own aspect ratio, repeated enough times to loop without a gap, drifting
+// left by exactly one set per cycle. Speed follows the "seconds per photo" setting.
+let reelToken=0;
+function renderReel(){
+  const token=++reelToken, track=$('reel-track');
+  const cards=photos.map((photo,index)=>{
+    const card=document.createElement('span');card.className='reel-card';card.dataset.index=String(index);
+    const img=document.createElement('img');img.src=photo.src;img.alt=photo.alt||'';img.decoding='async';
+    const caption=document.createElement('span');caption.className='reel-caption';caption.textContent=photo.caption||'';
+    card.append(img,caption);return card;
+  });
+  track.classList.remove('reel-ready');track.replaceChildren(...cards);
+  // Only the size matters for measuring, so wait for load (decode() can stall until the next painted frame).
+  const loaded=img=>img.complete?Promise.resolve():new Promise(done=>{img.addEventListener('load',done,{once:true});img.addEventListener('error',done,{once:true});});
+  Promise.all(cards.map(card=>loaded(card.querySelector('img')))).then(()=>{
+    if(token!==reelToken||!cards.length)return;
+    const gap=parseFloat(getComputedStyle(track).columnGap)||0, setWidth=track.scrollWidth+gap;
+    const copies=Math.ceil($('photo-reel').clientWidth/setWidth)+1;
+    for(let i=1;i<copies;i++)track.append(...cards.map(card=>card.cloneNode(true)));
+    track.style.setProperty('--reel-shift',`${-setWidth}px`);
+    updateReelSpeed();track.classList.add('reel-ready');
+  });
+}
+function updateReelSpeed(){$('reel-track').style.setProperty('--reel-duration',`${Math.max(1,photos.length)*Number(preferences.speed)/1000}s`);}
+let reelResizeTimer=null;
+addEventListener('resize',()=>{clearTimeout(reelResizeTimer);reelResizeTimer=setTimeout(renderReel,300);});
+// OK on the reel opens the photo nearest the middle in the full-size viewer.
+$('photo-reel').onclick=()=>{
+  const box=$('photo-reel').getBoundingClientRect(),middle=box.left+box.width/2;let nearest=0,distance=Infinity;
+  for(const card of $('reel-track').children){const r=card.getBoundingClientRect(),d=Math.abs(r.left+r.width/2-middle);if(d<distance){distance=d;nearest=Number(card.dataset.index);}}
+  openPhoto(nearest);
+};
 function rebuildDots() {
+  renderReel();
   $('spread-dots').replaceChildren();
   spreads().forEach((_,i)=>{
     const dot=document.createElement('button');dot.className='spread-dot';
@@ -95,19 +128,17 @@ $('book').addEventListener('animationend',()=>$('book').classList.remove('turnin
 $('prev-spread').onclick=()=>goToSpread(spreadIndex-1);
 $('next-spread').onclick=()=>goToSpread(spreadIndex+1);
 function scheduleAutoplay() {
-  clearInterval(autoplayInterval);
-  if(autoplay) autoplayInterval=setInterval(()=>{
-    if(!document.hidden&&!document.querySelector('dialog[open]')&&spreads().length>1) goToSpread(spreadIndex+1);
-  },Number(preferences.speed));
+  document.body.classList.toggle('reel-paused',!autoplay);
+  updateReelSpeed();
 }
 function showAutoplayState() {
   $('autoplay').setAttribute('aria-pressed',String(autoplay));
-  $('autoplay').setAttribute('aria-label',autoplay?'Dừng tự động lật trang':'Tự động lật trang');
+  $('autoplay').setAttribute('aria-label',autoplay?'Dừng ảnh trôi':'Cho ảnh trôi tiếp');
   $('autoplay').querySelector('use').setAttribute('href',autoplay?'#i-pause':'#i-play');
 }
 $('autoplay').onclick=()=>{
   autoplay=!autoplay;showAutoplayState();
-  scheduleAutoplay();toast(autoplay?`Tự lật trang mỗi ${preferences.speed/1000} giây.`:'Đã dừng tự động lật trang.');
+  scheduleAutoplay();toast(autoplay?`Ảnh trôi chậm, khoảng ${preferences.speed/1000} giây mỗi ảnh.`:'Đã dừng ảnh trôi.');
 };
 showAutoplayState();scheduleAutoplay();
 
@@ -290,7 +321,7 @@ document.addEventListener('keydown',event=>{
   const candidates=Array.from(scope.querySelectorAll('button,a[href],input:not([type="file"]),select,summary')).filter(element=>
     !element.disabled&&element.getClientRects().length&&getComputedStyle(element).visibility!=='hidden'&&!element.closest('[hidden]')&&(!element.closest('dialog')||element.closest('dialog')===activeDialog));
   if(!candidates.length)return;event.preventDefault();
-  if(!candidates.includes(focused)){(activeDialog?candidates[0]:(rememberedFocus(candidates)||$('photo-main'))).focus();return;}
+  if(!candidates.includes(focused)){(activeDialog?candidates[0]:(rememberedFocus(candidates)||$('photo-reel'))).focus();return;}
   const r=focused.getBoundingClientRect(),x=r.x+r.width/2,y=r.y+r.height/2;
   const horizontal=event.key==='ArrowLeft'||event.key==='ArrowRight', positive=event.key==='ArrowRight'||event.key==='ArrowDown';
   let best=null,bestScore=Infinity;
