@@ -6,6 +6,10 @@
 // Runs before app.js; window.__tvFit tells app.js to leave this outer page idle.
 (function () {
   if (window.top !== window) return;
+  // Cache the app's files so the next load (the TV reopening Home) does not wait for the network.
+  if ('serviceWorker' in navigator && location.protocol === 'https:') {
+    navigator.serviceWorker.register('sw.js').catch(function () {});
+  }
   var DESIGN_W = 1280, DESIGN_H = 720;
   function needsFit() {
     return innerWidth > innerHeight && (innerWidth < DESIGN_W || innerHeight < DESIGN_H);
