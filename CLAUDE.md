@@ -48,6 +48,10 @@ This archive is intended for continued development in Claude Code. Read `README.
 - Album: autoplay is on at load, 3 seconds by default (options 3/8/15/30 s); spreads slide in sideways (`spread-slide-next`/`-back` in `modern.css`), disabled under reduced motion by `style.css`.
 - D-pad navigation: candidates must lie wholly past the focused edge, scored like Android's FocusFinder (13 × edge gap² + centre offset²); Left/Right stay within the same row and stop at its end.
 
+## Deployment
+
+- Live at https://yeulacuoiweddingstudio-lab.github.io/nha-ti-yang-tv/ (GitHub Pages from branch `gh-pages`, which holds `dist/` only). Deploy with `git subtree push --prefix dist origin gh-pages` after committing to `main`.
+
 ## Scope of future work
 
 Start with the user's next concrete request. Preserve the existing app and accepted design. Framework migration, backend, TV packaging or additional paid services are separate implementation choices; do not introduce them merely to run this project.

@@ -30,6 +30,13 @@ python3 -m http.server 5173 --bind 127.0.0.1 --directory dist
 
 Không mở trực tiếp `dist/index.html` bằng `file://`: ứng dụng dùng JavaScript ES modules; hãy chạy qua HTTP như trên.
 
+## Bản đang chạy trên web
+
+- Trang: **https://yeulacuoiweddingstudio-lab.github.io/nha-ti-yang-tv/** (GitHub Pages, nhánh `gh-pages` = nội dung `dist/`).
+- Mã nguồn: https://github.com/yeulacuoiweddingstudio-lab/nha-ti-yang-tv (nhánh `main`).
+- Cập nhật sau khi sửa: commit lên `main`, rồi `git subtree push --prefix dist origin gh-pages`. Trang cập nhật sau khoảng 1 phút.
+- Trên TV Xiaomi: mở trình duyệt TCL, vào địa chỉ trên và lưu dấu trang để mở lại nhanh.
+
 ## 2. Mở trong Claude Code
 
 Mở cả thư mục `nha-minh-tv`, không chỉ một file HTML. Tệp `CLAUDE.md` ghi lại bối cảnh, kiến trúc và những điểm cần giữ khi sửa.
