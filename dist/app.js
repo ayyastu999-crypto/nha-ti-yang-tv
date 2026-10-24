@@ -252,6 +252,13 @@ $('timer-start').onclick=()=>{
 };
 $('timer-reset').onclick=()=>{timerDeadline=null;timerRemaining=timerMinutes*60000;timerFinished=false;$('timer-note').textContent='Thông báo sẽ hiện khi hết giờ, trong lúc trang đang mở.';renderTimer();};
 
+// Remember the last focused control (by id, app package or TV action) so focus returns to it after the TV
+// reloads the page, e.g. when it closed the launcher to free memory while another app was open.
+const focusKey=element=>element.id?`#${element.id}`:element.dataset.package?`[data-package="${element.dataset.package}"]`:element.dataset.tvAction?`[data-tv-action="${element.dataset.tvAction}"]`:'';
+document.addEventListener('focusin',event=>{const key=focusKey(event.target);if(key&&!event.target.closest('dialog'))try{localStorage.setItem('nha-minh-last-focus',key);}catch{}});
+function rememberedFocus(candidates){
+  try{const element=document.querySelector(localStorage.getItem('nha-minh-last-focus')||'');return element&&(!candidates||candidates.includes(element))&&element.getClientRects().length&&!element.closest('[hidden]')?element:null;}catch{return null;}
+}
 // Spatial navigation for remotes, keyboards and other D-pad input devices.
 document.addEventListener('keydown',event=>{
   const focused=document.activeElement;
@@ -281,7 +288,7 @@ document.addEventListener('keydown',event=>{
   const candidates=Array.from(scope.querySelectorAll('button,a[href],input:not([type="file"]),select,summary')).filter(element=>
     !element.disabled&&element.getClientRects().length&&getComputedStyle(element).visibility!=='hidden'&&!element.closest('[hidden]')&&(!element.closest('dialog')||element.closest('dialog')===activeDialog));
   if(!candidates.length)return;event.preventDefault();
-  if(!candidates.includes(focused)){(activeDialog?candidates[0]:$('photo-main')).focus();return;}
+  if(!candidates.includes(focused)){(activeDialog?candidates[0]:(rememberedFocus(candidates)||$('photo-main'))).focus();return;}
   const r=focused.getBoundingClientRect(),x=r.x+r.width/2,y=r.y+r.height/2;
   const horizontal=event.key==='ArrowLeft'||event.key==='ArrowRight', positive=event.key==='ArrowRight'||event.key==='ArrowDown';
   let best=null,bestScore=Infinity;
@@ -445,6 +452,8 @@ if(tvBridge){
     tile.onclick=()=>{if(!(tile.dataset.tvAction==='inputs'?tvBridge.openInputs():tvBridge.openTvSettings()))toast('TV chưa mở được mục này.');};
   });
   refreshAppTiles();
+  // As the TV's home screen, start with focus on a control so the first remote press already moves it.
+  (rememberedFocus()||appTiles.find(tile=>!tile.hidden))?.focus();
   // Coming back from Play Store or another app: an app may have been installed or removed meanwhile.
   document.addEventListener('visibilitychange',()=>{if(!document.hidden)refreshAppTiles();});
 }
