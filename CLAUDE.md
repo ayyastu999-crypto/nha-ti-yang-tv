@@ -54,6 +54,17 @@ This archive is intended for continued development in Claude Code. Read `README.
 
 - Live at https://ayyastu999-crypto.github.io/nha-ti-yang-tv/ (GitHub Pages from branch `gh-pages`, which holds `dist/` only). Deploy with `git subtree push --prefix dist origin gh-pages` after committing to `main`.
 
+## Android TV launcher (`android/`)
+
+- `vn.tiyang.home`: a WebView HOME activity that loads the live site, falling back to the copy of `dist/` bundled as
+  APK assets (served at `https://appassets.androidplatform.net/`) when offline. `sw.js` caches the shell so Home
+  reloads (the TV kills the launcher to free memory) are instant.
+- `window.TiYangTV` bridge (`TvBridge.java`): `isInstalled`, `launchApp`, `hasAppLabeled`, `launchByLabel`,
+  `openStoreSearch`, `openInputs`, `openTvSettings`. `app.js` turns on `.tv-launcher` mode only when it exists.
+- Back/Home in the app dispatch a `GoBack` key into the page; the activity never finishes. Use plain
+  `requestFocus()` — a directional request makes WebView jump to the first control and overrides the restored focus.
+- Verified on the MiTV-MOOQ0 (Android 10) on 24/10/2026: every tile opens its app, Home returns, boots into it.
+
 ## Scope of future work
 
 Start with the user's next concrete request. Preserve the existing app and accepted design. Framework migration, backend, TV packaging or additional paid services are separate implementation choices; do not introduce them merely to run this project.

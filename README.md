@@ -37,6 +37,20 @@ Không mở trực tiếp `dist/index.html` bằng `file://`: ứng dụng dùng
 - Cập nhật sau khi sửa: commit lên `main`, rồi `git subtree push --prefix dist origin gh-pages`. Trang cập nhật sau khoảng 1 phút.
 - Trên TV Xiaomi: mở trình duyệt TCL, vào địa chỉ trên và lưu dấu trang để mở lại nhanh.
 
+## Launcher trên TV Xiaomi (app Nhà Tí Yang)
+
+- App `vn.tiyang.home` (mã nguồn trong `android/`) là **màn hình chính** của TV: bấm Home là vào giao diện này.
+  App mở trang web ở trên (cập nhật qua web, không cần cài lại) và có sẵn một bản copy để vẫn hiện khi mất mạng.
+- Các ô YouTube, Netflix, VTVgo, FPT Play, TV360 mở app thật trên TV; app chưa cài thì ô tự ẩn (VTVgo mở Play Store).
+  Ô **Nguồn vào** mở màn hình HDMI/Live TV, **Cài đặt TV** mở cài đặt của TV.
+- **Màn hình cũ** (launcher Tối giản CleanYourTV, gói `com.gathin.tvhome`) vẫn được giữ nguyên:
+  - Xem tạm: chọn ô **Màn hình cũ**; bấm Home để quay lại Nhà Tí Yang.
+  - Đổi hẳn về màn hình cũ, không cần máy tính: Cài đặt → Ứng dụng → Nhà Tí Yang → **Tắt** (hoặc Gỡ cài đặt).
+    Muốn dùng lại Nhà Tí Yang thì vào lại đó và bấm **Bật**.
+  - Bằng máy tính (cần bật Gỡ lỗi USB): `cmd package set-home-activity com.gathin.tvhome/.MainActivity`
+    (đổi về Nhà Tí Yang: `cmd package set-home-activity vn.tiyang.home/.MainActivity`).
+- Build lại app: trong `android/`, `./gradlew assembleRelease` (JDK 17, Android SDK 34), cài bằng `pm install -r`.
+
 ## 2. Mở trong Claude Code
 
 Mở cả thư mục `nha-minh-tv`, không chỉ một file HTML. Tệp `CLAUDE.md` ghi lại bối cảnh, kiến trúc và những điểm cần giữ khi sửa.

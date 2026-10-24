@@ -7,7 +7,6 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
-import android.view.View;
 import android.view.WindowManager;
 import android.webkit.MimeTypeMap;
 import android.webkit.WebChromeClient;
@@ -65,7 +64,9 @@ public class MainActivity extends Activity {
         web.setWebChromeClient(new WebChromeClient());
         web.setWebViewClient(new HomeClient());
         web.loadUrl(REMOTE_URL);
-        web.requestFocus(View.FOCUS_DOWN);
+        // Plain focus, no direction: a directional request makes the WebView jump to the page's first control,
+        // overriding the control the page restores from its own memory.
+        web.requestFocus();
     }
 
     @Override
@@ -86,7 +87,7 @@ public class MainActivity extends Activity {
         super.onResume();
         web.onResume();
         web.resumeTimers();
-        web.requestFocus(View.FOCUS_DOWN);
+        web.requestFocus();
         if (showingLocal && isOnline()) {
             showingLocal = false;
             web.loadUrl(REMOTE_URL);
