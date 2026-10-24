@@ -52,7 +52,7 @@ This archive is intended for continued development in Claude Code. Read `README.
 
 ## Deployment
 
-- Live at https://yeulacuoiweddingstudio-lab.github.io/nha-ti-yang-tv/ (GitHub Pages from branch `gh-pages`, which holds `dist/` only). Deploy with `git subtree push --prefix dist origin gh-pages` after committing to `main`.
+- Live at https://ayyastu999-crypto.github.io/nha-ti-yang-tv/ (GitHub Pages from branch `gh-pages`, which holds `dist/` only). Deploy with `git subtree push --prefix dist origin gh-pages` after committing to `main`.
 
 ## Scope of future work
 

@@ -32,8 +32,8 @@ Không mở trực tiếp `dist/index.html` bằng `file://`: ứng dụng dùng
 
 ## Bản đang chạy trên web
 
-- Trang: **https://yeulacuoiweddingstudio-lab.github.io/nha-ti-yang-tv/** (GitHub Pages, nhánh `gh-pages` = nội dung `dist/`).
-- Mã nguồn: https://github.com/yeulacuoiweddingstudio-lab/nha-ti-yang-tv (nhánh `main`).
+- Trang: **https://ayyastu999-crypto.github.io/nha-ti-yang-tv/** (GitHub Pages, nhánh `gh-pages` = nội dung `dist/`).
+- Mã nguồn: https://github.com/ayyastu999-crypto/nha-ti-yang-tv (nhánh `main`).
 - Cập nhật sau khi sửa: commit lên `main`, rồi `git subtree push --prefix dist origin gh-pages`. Trang cập nhật sau khoảng 1 phút.
 - Trên TV Xiaomi: mở trình duyệt TCL, vào địa chỉ trên và lưu dấu trang để mở lại nhanh.
 
