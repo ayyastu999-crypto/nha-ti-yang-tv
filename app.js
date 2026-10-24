@@ -24,6 +24,8 @@ const demoSpreads = [
   {photos:[4,5,3],title:'Hẹn nhau một chiều ở biển.',subtitle:'Để nắng hong khô những bận lòng.',kicker:'MANG NẮNG VỀ NHÀ',collection:'Mang nắng về nhà',captions:['gom một chút nắng vàng','để dành cho những ngày mưa.']},
   {photos:[1,2,0],title:'Bình yên ở thật gần.',subtitle:'Một chuyến đi, thêm nhiều điều thương.',kicker:'ĐI VỀ PHÍA BÌNH YÊN',collection:'Đi về phía bình yên',captions:['những ngày thật xanh','nhớ cả những điều nhỏ nhất.']}
 ];
+// The album shown when nothing was added on this device: the demo photos, or the family album inside the TV app.
+let basePhotos=demoPhotos, baseSpreads=demoSpreads, familyAlbum=false;
 let photos = [...demoPhotos], customPhotos=false, spreadIndex=0, lightboxIndex=0;
 let autoplay=true, autoplayInterval=null, toastTimeout=null, calendarYear, calendarMonth, chosenDay;
 let timerMinutes=15, timerRemaining=900000, timerDeadline=null, timerFinished=false;
@@ -50,7 +52,7 @@ function applyPreferences() {
 applyPreferences();
 
 function spreads() {
-  if (!customPhotos) return demoSpreads;
+  if (!customPhotos) return baseSpreads;
   return Array.from({length:Math.ceil(photos.length/3)},(_,i)=>({
     photos:[i*3,i*3+1,i*3+2].filter(n=>n<photos.length),
     title:'Những điều mình muốn giữ.',subtitle:'Một khoảnh khắc, một niềm thương.',
@@ -73,13 +75,13 @@ function renderSpread() {
     const photoIndex=spread.photos[i], button=$(`photo-${slot}`);
     button.hidden=photoIndex===undefined;
     if (photoIndex===undefined) return;
-    const photo=photos[photoIndex];$(`${slot}-image`).src=photo.src;$(`${slot}-image`).alt=photo.alt;
+    const photo=photos[photoIndex];$(`${slot}-image`).src=photo.src;$(`${slot}-image`).alt=photo.alt;$(`${slot}-image`).style.objectPosition=photo.focus||'';
     button.setAttribute('aria-label',`Xem ảnh: ${photo.caption}`);button.onclick=()=>openPhoto(photoIndex);
   });
   $('spread-title').textContent=spread.title;$('spread-subtitle').textContent=spread.subtitle;
   $('spread-kicker').textContent=spread.kicker;$('collection-label').textContent=spread.collection;
   $('top-caption').textContent=spread.captions[0];$('bottom-caption').textContent=spread.captions[1];
-  $('sample-tag').textContent=customPhotos?'Ảnh của nhà':'Ảnh minh họa';
+  $('sample-tag').textContent=customPhotos||familyAlbum?'Ảnh của nhà':'Ảnh minh họa';
   $('left-page-number').textContent=pad(spreadIndex*2+1);$('right-page-number').textContent=pad(spreadIndex*2+2);
   Array.from($('spread-dots').children).forEach((b,i)=>{b.classList.toggle('selected',i===spreadIndex);b.setAttribute('aria-pressed',String(i===spreadIndex));});
   $('prev-spread').disabled=$('next-spread').disabled=list.length<2;
@@ -170,7 +172,7 @@ $('file-input').onchange=async event=>{
 };
 $('restore-demo').onclick=async()=>{
   if(!customPhotos){toast('Album đang dùng ảnh minh họa.');return;}
-  photos=[...demoPhotos];customPhotos=false;spreadIndex=0;rebuildDots();renderSpread();renderGallery();
+  photos=[...basePhotos];customPhotos=false;spreadIndex=0;rebuildDots();renderSpread();renderGallery();
   try{await storePhotos(null);toast('Đã trở về album minh họa. Ảnh gốc của chị vẫn ở thiết bị.');}
   catch{toast('Đã trở về ảnh minh họa cho lần xem này.');}
 };
@@ -452,6 +454,15 @@ if(tvBridge){
     tile.onclick=()=>{if(!(tile.dataset.tvAction==='inputs'?tvBridge.openInputs():tvBridge.openTvSettings()))toast('TV chưa mở được mục này.');};
   });
   refreshAppTiles();
+  // The family album lives only inside the TV app (never on the public site): use it when this build has one.
+  try{
+    const album=JSON.parse(tvBridge.familyAlbum?.()||'null');
+    if(album?.photos?.length&&album.spreads?.length){
+      basePhotos=album.photos.map(photo=>({...photo,src:`https://appassets.androidplatform.net/family/${photo.file}`}));
+      baseSpreads=album.spreads;familyAlbum=true;
+      if(!customPhotos){photos=[...basePhotos];spreadIndex=0;rebuildDots();renderSpread();renderGallery();}
+    }
+  }catch{}
   // As the TV's home screen, start with focus on a control so the first remote press already moves it.
   (rememberedFocus()||appTiles.find(tile=>!tile.hidden))?.focus();
   // Coming back from Play Store or another app: an app may have been installed or removed meanwhile.
